@@ -13,12 +13,17 @@ def get_number(prompt):
     except ValueError:
       print("Please enter a valid number")
 
-a = get_number("Enter first number: ")
-b = get_number("Enter second number: ")
+def main():
+  """Run the calculator: read two numbers and print their sum."""
+  a = get_number("Enter first number: ")
+  b = get_number("Enter second number: ")
 
-result = add(a, b)
+  result = add(a, b)
 
-if result.is_integer():
-  print(int(result))
-else:
-  print(result)
+  if result.is_integer():
+    print(int(result))
+  else:
+    print(result)
+
+if __name__ == "__main__":
+  main()
