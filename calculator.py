@@ -5,6 +5,20 @@ def add(a, b):
   """
   return a + b
 
-print(add(2, 3))
-print(add(-1, 5))
-print(add(2.5, 0.5))
+def get_number(prompt):
+  """Keep asking until the user enters a valid number."""
+  while True:
+    try:
+      return float(input(prompt))
+    except ValueError:
+      print("Please enter a valid number")
+
+a = get_number("Enter first number: ")
+b = get_number("Enter second number: ")
+
+result = add(a, b)
+
+if result.is_integer():
+  print(int(result))
+else:
+  print(result)
