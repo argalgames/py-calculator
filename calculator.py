@@ -29,7 +29,8 @@ def get_operator():
     print("Please enter + or -")
 
 def format_result(value):
-  """Return value as text, without a trailing .0 for the whole numbers."""
+  """Return value as text, without a trailing .0 for whole numbers."""
+  value = round(value, 10)
   if value.is_integer():
     return str(int(value))
   else:
@@ -45,7 +46,7 @@ def main():
     result = add(a, b)
   elif operator == "-":
     result = subtract(a, b)
-      
+
   print(format_result(result))
 
 if __name__ == "__main__":
