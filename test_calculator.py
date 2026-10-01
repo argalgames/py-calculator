@@ -1,4 +1,4 @@
-from calculator import add
+from calculator import add, subtract, format_result
 import pytest
 
 def test_add_two_positive_numbers():
@@ -15,3 +15,36 @@ def test_add_two_decimal_numbers():
 
 def test_add_decimals_precision():
   assert add(0.1, 0.2) == pytest.approx(0.3)
+
+def test_subtract_two_positive_numbers():
+  assert subtract(10, 4) == 6
+
+def test_subtract_result_below_zero():
+  assert subtract(3, 5) == -2
+
+def test_subtract_two_negative_numbers():
+  assert subtract(-2, -7) == 5
+
+def test_subtract_negative_positive_numbers():
+  assert subtract(-3, 5) == -8
+
+def test_subtract_positive_negative_numbers():
+  assert subtract(5, -8) == 13
+
+def test_subtract_decimal_positive_numbers():
+  assert subtract(5.5, 3) == 2.5
+
+def test_subtract_decimal_negative_numbers():
+  assert subtract(5.5, -3) == 8.5
+
+def test_subtract_decimal_precision():
+  assert subtract(0.2, 0.3) == pytest.approx(-0.1)
+
+def test_positive_format_result():
+  assert format_result(5.0) == "5"
+
+def test_decimal_format_result():
+  assert format_result(3.5) == "3.5"
+
+def test_negative_format_result():
+  assert format_result(-2.0) == "-2"
