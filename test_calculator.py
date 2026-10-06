@@ -1,4 +1,4 @@
-from calculator import add, subtract, multiply, divide, format_result
+from calculator import add, subtract, multiply, divide, power, format_result
 import pytest
 
 def test_add_two_positive_numbers():
@@ -70,6 +70,22 @@ def test_divide_decimal_precision():
 def test_divide_by_zero_raises_error():
   with pytest.raises(ZeroDivisionError):
     divide(5, 0)
+
+def test_power_normal():
+  assert power(2, 3) == 8
+
+def test_power_to_zero():
+  assert power(5, 0) == 1
+
+def test_power_positive_negative():
+  assert power(2, -1) == 0.5
+
+def test_power_positive_fraction():
+  assert power(9, 0.5) == 3
+
+def test_power_negative_base_fractional_exponent_raises_error():
+  with pytest.raises(ValueError):
+    power(-8, 0.5)
 
 def test_positive_format_result():
   assert format_result(5.0) == "5"

@@ -27,6 +27,26 @@ def divide(a, b):
   """
   return a / b
 
+def power(a, b):
+  """Return a raised to the power of b (order matters: b is the exponent).
+
+  Works with ints and floats, e.g. power(2, 3) -> 8.
+  Raises ValueError if a is negative and b is not a whole number,
+  because the result would not be a real number.
+  Raises OverflowError if the result is too large to store.
+  """
+  if a < 0 and not float(b).is_integer():
+    raise ValueError("a negative number can't be raised to a fractional power")
+  return a ** b
+
+OPERATIONS = {
+  "+": add,
+  "-": subtract,
+  "*": multiply,
+  "/": divide,
+  "**": power
+}
+
 def get_number(prompt):
   """Keep asking until the user enters a valid number."""
   while True:
@@ -36,12 +56,12 @@ def get_number(prompt):
       print("Please enter a valid number")
 
 def get_operator():
-  """Keep asking until the user enters +, -, *, or /."""
+  """Keep asking until the user enters an operator listed in OPERATIONS."""
   while True:
-    operator = input("Operator (+, -, *, or /): ").strip()
-    if operator in ("+", "-", "*", "/"):
+    operator = input(f"Operator {', '.join(OPERATIONS)}: ").strip()
+    if operator in OPERATIONS:
       return operator
-    print("Please enter +, -, *, or /")
+    print(f"Please enter one of: {','.join(OPERATIONS)}")
 
 def format_result(value):
   """Return value as text, without a trailing .0 for whole numbers."""
@@ -58,17 +78,9 @@ def main():
   b = get_number("Enter second number: ")
 
   try:
-    if operator == "+":
-      result = add(a, b)
-    elif operator == "-":
-      result = subtract(a, b)
-    elif operator == "*":
-      result = multiply(a, b)
-    elif operator == "/":
-      result = divide(a, b)
-    print(format_result(result))
-  except ZeroDivisionError:
-    print("Cannot divide by zero")
+    print(format_result(OPERATIONS[operator](a, b)))
+  except (ZeroDivisionError, ValueError, OverflowError) as error:
+    print(f"Cannot calculate: {error}")
 
 if __name__ == "__main__":
   main()
