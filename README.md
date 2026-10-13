@@ -13,7 +13,25 @@ A simple command-line calculator written in Python. It reads two numbers and an 
 ## Requirements
 
 - Python 3.12 or newer
-- [pytest](https://docs.pytest.org/), only needed to run the tests
+- [pytest](https://docs.pytest.org/), only needed to run the tests (installed from `requirements.txt`, see below)
+
+## Setup
+
+Create and activate a virtual environment, then install the dependencies:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+On macOS or Linux, activate with `source .venv/bin/activate` instead.
+
+If PowerShell says running scripts is disabled, allow scripts for your user once and activate again:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
 
 ## Usage
 
@@ -58,8 +76,9 @@ Goodbye!
 
 ## Running the tests
 
+With the virtual environment active:
+
 ```bash
-python -m pip install pytest
 python -m pytest
 ```
 
