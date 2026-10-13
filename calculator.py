@@ -61,7 +61,7 @@ def get_operator():
     operator = input(f"Operator {', '.join(OPERATIONS)}: ").strip()
     if operator in OPERATIONS:
       return operator
-    print(f"Please enter one of: {','.join(OPERATIONS)}")
+    print(f"Please enter one of: {', '.join(OPERATIONS)}")
 
 def format_result(value):
   """Return value as text, without a trailing .0 for whole numbers."""
@@ -71,16 +71,39 @@ def format_result(value):
   else:
     return str(value)
 
-def main():
-  """Run the calculator: read two numbers and print their sum or difference."""
-  a = get_number("Enter first number: ")
-  operator = get_operator()
-  b = get_number("Enter second number: ")
+def calculate(a, operator, b):
+  """Return the result of 'a operator b' as text, e.g. calculate(4, "*", 5) -> "20".
 
+  If the calculation fails (division by zero, invalid power, or a result
+  too large), return a "Cannot calculate: ..." message instead of raising.
+  """
   try:
-    print(format_result(OPERATIONS[operator](a, b)))
+    return format_result(OPERATIONS[operator](a, b))
   except (ZeroDivisionError, ValueError, OverflowError) as error:
-    print(f"Cannot calculate: {error}")
+    return f"Cannot calculate: {error}"
+
+def main():
+  """Run the calculator in a loop until the user chooses to stop.
+
+  Each round reads two numbers and an operator, then prints the result.
+  Answering anything other than y/yes to "Another calculation?" quits.
+  Ctrl+C or end of input (Ctrl+Z then Enter on Windows) exits cleanly
+  at any prompt.
+  """
+  try:
+    while True:
+      a = get_number("Enter first number: ")
+      operator = get_operator()
+      b = get_number("Enter second number: ")
+      print(calculate(a, operator, b))
+
+      again = input("Another calculation? (y/n): ").strip().lower()
+      if again not in ("y", "yes"):
+        print("Goodbye!")
+        break
+  except (KeyboardInterrupt, EOFError):
+    print()
+    print("Goodbye!")
 
 if __name__ == "__main__":
   main()
