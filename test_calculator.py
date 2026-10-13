@@ -1,4 +1,4 @@
-from calculator import add, subtract, multiply, divide, power, format_result
+from calculator import add, subtract, multiply, divide, power, format_result, calculate
 import pytest
 
 def test_add_two_positive_numbers():
@@ -87,6 +87,9 @@ def test_power_negative_base_fractional_exponent_raises_error():
   with pytest.raises(ValueError):
     power(-8, 0.5)
 
+def test_power_negative_base_whole_number_exponent():
+  assert power(-2, 3) == -8
+
 def test_positive_format_result():
   assert format_result(5.0) == "5"
 
@@ -95,3 +98,15 @@ def test_decimal_format_result():
 
 def test_negative_format_result():
   assert format_result(-2.0) == "-2"
+
+def test_calculate_multiply_returns_whole_number():
+  assert calculate(4, "*", 5) == "20"
+
+def test_calculate_divide_returns_decimal_text():
+  assert calculate(10, "/", 4) == "2.5"
+
+def test_calculate_divide_by_zero_returns_error_message():
+  assert calculate(5, "/", 0) == "Cannot calculate: division by zero"
+
+def test_calculate_negative_base_fractional_power_returns_error_message():
+  assert calculate(-8, "**", 0.5).startswith("Cannot calculate")
